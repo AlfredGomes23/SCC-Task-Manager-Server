@@ -27,9 +27,15 @@ async function run() {
         // await client.connect();
         //database collections
         const users = client.db("task-manager").collection("users");
-        //routes
+        //get all_______________Users_________________
         app.get('/users', async (req, resp) => {
             const result = await users.find().toArray();
+            resp.send(result);
+        });
+        //add a user
+        app.post('/users', async (req, resp) => {
+            const user = req.body;
+            const result = await users.insertOne(user);
             resp.send(result);
         });
         // Send a ping to confirm a successful connection
