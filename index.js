@@ -32,6 +32,12 @@ async function run() {
             const result = await users.find().toArray();
             resp.send(result);
         });
+        //check if user
+        app.get('/user', async (req, resp) => {
+            const { email } = req.query;
+            const result = await users.findOne({ email: email });
+            resp.send(result ? { new: false } : { new: true })
+        });
         //add a user
         app.post('/users', async (req, resp) => {
             const user = req.body;
