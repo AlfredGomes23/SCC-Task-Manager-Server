@@ -27,6 +27,12 @@ async function run() {
         // await client.connect();
         //database collections
         const users = client.db("task-manager").collection("users");
+        const tasks = client.db("task-manager").collection("tasks");
+
+        //_____________________jwt_____________________
+        app.get('/jwt', async (req, resp) => {
+
+        });
         //get all_______________Users_________________
         app.get('/users', async (req, resp) => {
             const result = await users.find().toArray();
@@ -42,6 +48,13 @@ async function run() {
         app.post('/users', async (req, resp) => {
             const user = req.body;
             const result = await users.insertOne(user);
+            resp.send(result);
+        });
+        //add a task
+        app.post('/task', async (req, resp) => {
+            const task = req.body;
+            const result = await tasks.insertOne(task);
+            console.log(task, result);
             resp.send(result);
         });
         // Send a ping to confirm a successful connection
