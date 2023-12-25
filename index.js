@@ -75,6 +75,13 @@ async function run() {
             console.log(status, id, result);
             resp.send(result);
         });
+        //delete a task
+        app.delete('/task/:id', async (req, resp) => {
+            const { id } = req.params;
+            const result = await tasks.deleteOne({ _id: new ObjectId(id) });
+            console.log(id, result);
+            resp.send(result);
+        });
         // Send a ping to confirm a successful connection
         // await client.db("admin").command({ ping: 1 });
         // console.log("Pinged your deployment. You successfully connected to MongoDB!");
