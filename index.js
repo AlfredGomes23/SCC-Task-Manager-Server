@@ -9,7 +9,10 @@ const app = express();
 //middleware
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:5173']
+    origin: ['http://localhost:5173',
+        'https://cosmic-crisp-46ba03.netlify.app',
+        'https://scc-task-manager.web.app',
+        'https://scc-task-manager.firebaseapp.com']
 }));
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
