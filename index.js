@@ -50,11 +50,21 @@ async function run() {
             const result = await users.insertOne(user);
             resp.send(result);
         });
+        //get an user's tasks
+        app.get('/tasks', async (req, resp) => {
+            const { email, task } = req.query;
+            const today = new Date().toISOString().split("T")[0];
+            let result = await tasks.find({
+                "email": email,
+                "status": task,
+                "date": today
+            }).sort({ "priority": 1 }).toArray();
+            resp.send(result);
+        });
         //add a task
         app.post('/task', async (req, resp) => {
             const task = req.body;
             const result = await tasks.insertOne(task);
-            console.log(task, result);
             resp.send(result);
         });
         // Send a ping to confirm a successful connection
