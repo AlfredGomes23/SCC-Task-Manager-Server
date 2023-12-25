@@ -3,7 +3,7 @@ const cors = require('cors');
 const port = process.env.PORT || 5000;
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
 
 //middleware
@@ -65,6 +65,14 @@ async function run() {
         app.post('/task', async (req, resp) => {
             const task = req.body;
             const result = await tasks.insertOne(task);
+            resp.send(result);
+        });
+        //update a task status
+        app.patch('/task/:status/:id', async (req, resp) => {
+            const { status, id } = req.params;
+            const result = await tasks.updateOne({ _id: new ObjectId(id) },
+                { $set: { "status": status } });
+            console.log(status, id, result);
             resp.send(result);
         });
         // Send a ping to confirm a successful connection
